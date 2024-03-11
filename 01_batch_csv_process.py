@@ -23,9 +23,9 @@ def main():
         .build()
     )
 
-    device_tab =tenv.from_path('device_data')
-    #print(device_tab.print_schema())
-    #print(device_tab.to_pandas())
+    device_tab = tenv.from_path('device_data')
+    # print(device_tab.print_schema())
+    # print(device_tab.to_pandas().head())
 
     distinct_devices = device_tab.select(device_tab.device).distinct()
     print(distinct_devices.to_pandas())
@@ -33,4 +33,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
