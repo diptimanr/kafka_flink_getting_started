@@ -1,11 +1,13 @@
-from pyflink.table import EnvironmentSettings, TableEnvironment, TableDescriptor, Schema, DataTypes
+from pyflink.table import (EnvironmentSettings, TableEnvironment,
+                           TableDescriptor, Schema, DataTypes)
 
 
 def main():
     settings = EnvironmentSettings.in_batch_mode()
     tenv = TableEnvironment.create(settings)
 
-    field_names = ['ts', 'device', 'co', 'humidity', 'light', 'lpg', 'motion', 'smoke', 'temp']
+    field_names = ['ts', 'device', 'co', 'humidity',
+                   'light', 'lpg', 'motion', 'smoke', 'temp']
     field_types = [DataTypes.STRING(), DataTypes.STRING(),
                    DataTypes.STRING(), DataTypes.STRING(),
                    DataTypes.STRING(), DataTypes.STRING(),
@@ -28,7 +30,11 @@ def main():
     # print(device_tab.to_pandas().head())
 
     distinct_devices = device_tab.select(device_tab.device).distinct()
-    print(distinct_devices.to_pandas())
+    # print(distinct_devices.to_pandas())
+
+    high_temp_devices = device_tab.select(device_tab.ts, device_tab.device, device_tab.temp) \
+                                    .where(device_tab.temp >= "20")
+    print(high_temp_devices.to_pandas())
 
 
 if __name__ == '__main__':
