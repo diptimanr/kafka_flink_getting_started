@@ -34,7 +34,11 @@ def main():
 
     high_temp_devices = device_tab.select(device_tab.ts, device_tab.device, device_tab.temp) \
                                     .where(device_tab.temp >= "20")
+
     print(high_temp_devices.to_pandas())
+    print('\n')
+    print("Explain plan for high_temp_device query \n")
+    print(high_temp_devices.explain())
 
 
 if __name__ == '__main__':
