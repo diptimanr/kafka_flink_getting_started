@@ -26,11 +26,11 @@ def main():
     )
 
     device_tab = tenv.from_path('device_data')
-    # print(device_tab.print_schema())
-    # print(device_tab.to_pandas().head())
+    print(device_tab.print_schema())
+    print(device_tab.to_pandas().head())
 
     distinct_devices = device_tab.select(device_tab.device).distinct()
-    # print(distinct_devices.to_pandas())
+    print(distinct_devices.to_pandas())
 
     high_temp_devices = device_tab.select(device_tab.ts, device_tab.device, device_tab.temp) \
                                     .where(device_tab.temp >= "20")
