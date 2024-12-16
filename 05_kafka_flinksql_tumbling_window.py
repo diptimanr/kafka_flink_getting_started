@@ -7,7 +7,7 @@ def main():
     settings = EnvironmentSettings.in_streaming_mode()
     tenv = StreamTableEnvironment.create(env, settings)
 
-    env.add_jars("file:///D:\\testing_space\\PycharmProjects\\kafka-flink-getting-started\\flink-sql-connector-kafka-3.1.0-1.18.jar")
+    env.add_jars("file:///D:\\testing_space\\PycharmProjects\\kafka-flink-getting-started\\flink-sql-connector-kafka-3.3.0-1.20.jar")
 
     src_ddl = """
         CREATE TABLE sensor_readings (
