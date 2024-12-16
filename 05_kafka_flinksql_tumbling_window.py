@@ -36,16 +36,19 @@ def main():
     # For every 30 seconds non-overlapping window
     # Calculate the total charge consumed grouped by device
     tumbling_w_sql = """
-            SELECT
-                device_id,
-                TUMBLE_START(proctime, INTERVAL '30' SECONDS) AS window_start,
-                TUMBLE_END(proctime, INTERVAL '30' SECONDS) AS window_end,
-                SUM(ampere_hour) AS charge_consumed
-            FROM sensor_readings
-            GROUP BY
-                TUMBLE(proctime, INTERVAL '30' SECONDS),
-                device_id
-        """
+                    SELECT
+                        device_id,
+                        window_start,
+                        window_end,
+                        SUM(ampere_hour) as charge_consumed
+                    FROM TABLE(
+                        TUMBLE(TABLE sensor_readings, DESCRIPTOR(proctime), INTERVAL '30' SECOND)
+                    )
+                    GROUP BY
+                        window_start,
+                        window_end,
+                        device_id
+                """"
 
     tumbling_w = tenv.sql_query(tumbling_w_sql)
 
